@@ -1,5 +1,5 @@
 import unittest
-from htmlnode import HTMLNode
+from htmlnode import HTMLNode, LeafNode
 
 
 class TestHTMLNode(unittest.TestCase):
@@ -48,7 +48,19 @@ class TestHTMLNode(unittest.TestCase):
             node.__repr__(),
             "HTMLNode(p, What a strange world, children: None, {'class': 'primary'})",
         )
-
+    
+    class TestLeafNode(unittest.TestCase):
+        def test_leaf_to_html_p(self):
+            node = LeafNode("p", "Hello, world!")
+            self.assertEqual(node.to_html(), "<p>Hello, world!</p>")
+        
+        def test_leaf_to_html_i(self):
+            node = LeafNode("i", "Hello, world!")
+            self.assertEqual(node.to_html(), "<i>Hello, world!</i>")
+        
+        def test_leaf_to_html_no_tag(self):
+            node = LeafNode(None, "Hello, world!")
+            self.assertEqual(node.to_html(), "Hello, world!")
 
 if __name__ == "__main__":
     unittest.main()
