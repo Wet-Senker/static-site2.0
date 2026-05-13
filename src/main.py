@@ -1,8 +1,30 @@
 from textnode import TextNode, TextType
+import os, shutil
+from pathlib import Path
+
+working_directory = Path(__file__).parent.parent
+
+src = working_directory / "static"
+dst = working_directory / "public"
+
+def copy_recursive(src, dst):
+    for file in os.listdir(src):
+        src_path = os.path.join(src, file)
+        dst_path = os.path.join(dst, file)
+        if os.path.isfile(src_path):
+            shutil.copy(src_path, dst_path)
+        elif os.path.isdir(src_path):
+            os.mkdir(dst_path)
+            copy_recursive(src_path, dst_path)
+
+            
+def copy_and_delete(src, dst):
+    if os.path.exists(dst):
+        shutil.rmtree(dst)
+    os.mkdir(dst)
+    copy_recursive(src, dst)
 
 def main():
-    node1 = TextNode(TextType.BOLD, "This is some anchor text", 'https://bootdev.com')
-    print(node1)
-
-if __name__ == "__main__":
-    main()
+    copy_and_delete(src, dst)
+        
+main()
