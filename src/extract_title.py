@@ -1,13 +1,9 @@
 def extract_title(markdown):
     lines = markdown.split("\n")
     for line in lines:
-        if line.startswith("#"):
-            return line.split("#")[1].strip()
+        if line.startswith("# "):
+            return line[1:].strip()
     raise ValueError("Document doesn't contain #") 
-
-markdown = "# Hello how are you?"
-
-print(extract_title(markdown))
 
 """
 For the next step, adjust your condition so it matches lines like:
