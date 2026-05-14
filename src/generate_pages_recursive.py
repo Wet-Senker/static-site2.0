@@ -1,7 +1,7 @@
 from pathlib import Path
 from generate_page import generate_page
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     dir_path_content = Path(dir_path_content)
     template_path = Path(template_path)
     dest_dir_path = Path(dest_dir_path)
@@ -13,11 +13,11 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
             generate_pages_recursive(
                 item,
                 template_path,
-                dest_dir_path / item.name
+                dest_dir_path / item.name, basepath
             )
         elif item.is_file() and item.suffix == ".md":
             generate_page(
                 item,
                 template_path,
-                dest_dir_path / "index.html"
+                dest_dir_path / "index.html", basepath
             )

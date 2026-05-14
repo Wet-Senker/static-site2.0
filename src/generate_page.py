@@ -2,7 +2,7 @@ from pathlib import Path
 from markdown_blocks import markdown_to_html_node
 from extract_title import extract_title
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     from_path = Path(from_path)
     template_path = Path(template_path)
     dest_path = Path(dest_path)
@@ -18,6 +18,8 @@ def generate_page(from_path, template_path, dest_path):
 
     new_html = content_tp.replace("{{ Title }}", title)
     new_html = new_html.replace("{{ Content }}", html)
+    new_html = new_html.replace('href="/', f'href="{basepath}')
+    new_html = new_html.replace('src="/', f'src="{basepath}')
 
     dest_path.parent.mkdir(parents=True, exist_ok=True)
     dest_path.write_text(new_html)
