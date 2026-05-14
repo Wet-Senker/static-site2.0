@@ -1,19 +1,16 @@
 from pathlib import Path
 from copy_and_delete import copy_and_delete
-from generate_page import generate_page
+from generate_pages_recursive import generate_pages_recursive
 
 working_directory = Path(__file__).parent.parent
 
 src = working_directory / "static"
 dst = working_directory / "public"
-
-pages_content = ["content/blog/glorfindel/index.md", "content/blog/tom/index.md", "content/blog/majesty/index.md", "content/contact/index.md"]
-
-pages_public = ["public/blog/glorfindel/index.md", "public/blog/tom/index.md", "public/blog/majesty/index.md", "public/contact/index.md"]
+content = working_directory / "content"
+template = working_directory / "template.html"
 
 def main():
     copy_and_delete(src, dst)
-    for page_content, page_public in zip(pages_content, pages_public):
-        generate_page(page_content, "template.html", page_public)
-        
+    generate_pages_recursive(content, template, dst)
+
 main()
