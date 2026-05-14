@@ -1,1 +1,1 @@
-python3 src/main.py "/Wet-Senker/"
+python3 src/main.py "/static-site2.0/"
